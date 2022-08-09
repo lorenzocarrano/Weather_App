@@ -12,13 +12,11 @@ root.title("Meteo")
 #root.geometry("435x110")
 root.configure(background="light blue")
 
-
 def show_graphic(api, query):
     fig, ax = plt.subplots()
     ax.plot(np.linspace(0, api['cnt'], api['cnt']), collect_data(api, query))
     ax.set_title(query.get())
     plt.show()
-
 
 def actual_forecast():
     try:
@@ -58,7 +56,6 @@ def actual_forecast():
         temp_max.grid(row=2, column=1)
         temp_percepita.grid(row=3, column=0)
 
-
 def next_five_days_forecast():
     try:
         api_request = requests.get("http://api.openweathermap.org/data/2.5/forecast?q=" + city.get() + "&appid=" + Key)
@@ -83,7 +80,7 @@ def next_five_days_forecast():
             day_frame.grid(row=0, column=frame_clmn)
             frame_clmn += 1
             while api["list"][i]["dt_txt"][8:10] == actual_day and i < api["cnt"]:
-                lbl = Label(day_frame, text=get_time(api, i, mode='hm') + ": Temperatura°C: " + str(
+                lbl = Label(day_frame, text=get_time(api, i, mode='hm') + ": Temperature°C: " + str(
                     round(api["list"][i]["main"]["feels_like"] - 273))
                                             + "; " + get_weather_description(api, i), font=("Helvetica", 8))
                 lbl.grid(row=lbl_row)
@@ -94,11 +91,11 @@ def next_five_days_forecast():
             lbl_row = 0
 
         query_options = [
-            "Temperatura percepita",
-            "Temperatura minima",
-            "Temperatura massima",
-            "Pressione",
-            "Umidita'"
+            "Perceived Temperature",
+            "max Temperature",
+            "min Temperature",
+            "Pressure",
+            "Humidity"
         ]
         query = StringVar()
         query.set(query_options[0])
@@ -106,7 +103,6 @@ def next_five_days_forecast():
         query_menu.grid(row=lbl_row + 1, column=1)
         graphic_btn = Button(Window2, text="Show Graphic", command=lambda: show_graphic(api, query))
         graphic_btn.grid(row=lbl_row + 1, column=0)
-
 
 city = Entry(root)
 city.grid(row=0, column=0, padx=20, pady=10, columnspan=5)
@@ -117,5 +113,4 @@ next_days_btn.grid(row=1, column=1)
 
 root.bind('<Return>', lambda eff: actual_forecast())
 root.bind('<Shift-Return>', lambda eff: next_five_days_forecast())
-
 root.mainloop()
