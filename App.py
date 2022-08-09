@@ -44,7 +44,7 @@ def actual_forecast():
         temp = Label(temperature_frame, text="Temperature: " + str(int(api["main"]["temp"]) - 273))
         temp_min = Label(temperature_frame, text="min: " + str(int(api["main"]["temp_min"]) - 273))
         temp_max = Label(temperature_frame, text="max: " + str(int(api["main"]["temp_max"]) - 273))
-        temp_percepita = Label(temperature_frame, text="Percepita: " + str(int(api["main"]["feels_like"]) - 273))
+        temp_percepita = Label(temperature_frame, text="Perceived: " + str(int(api["main"]["feels_like"]) - 273))
 
         state.grid(row=0, column=0)
         prov.grid(row=0, column=1)
@@ -52,9 +52,9 @@ def actual_forecast():
         hum.grid(row=2, column=0)
         press.grid(row=2, column=1)
         temp.grid(row=2, column=0)
-        temp_min.grid(row=2, column=0)
-        temp_max.grid(row=2, column=1)
-        temp_percepita.grid(row=3, column=0)
+        temp_min.grid(row=3, column=0)
+        temp_max.grid(row=3, column=1)
+        temp_percepita.grid(row=4, column=0)
 
 def next_five_days_forecast():
     try:
