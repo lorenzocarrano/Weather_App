@@ -9,7 +9,7 @@ import numpy as np
 
 root = Tk()
 root.title("Meteo")
-root.geometry("329x95")
+#root.geometry("435x110")
 root.configure(background="light blue")
 
 
@@ -32,7 +32,7 @@ def actual_forecast():
 
         Window1 = Toplevel()
         Window1.title(city.get() + ": Real-Time Weather")
-        Window1.geometry("600x400")
+        #Window1.geometry("600x400")
         temperature_frame = LabelFrame(Window1, text="Temperature(°C)", font=("Helvetica", 10), padx=10, pady=10)
         temperature_frame.grid(row=2, column=0, padx=30, pady=10)
         main_informations_frame = LabelFrame(Window1, text="General", font=("Helvetica", 10))
@@ -68,7 +68,7 @@ def next_five_days_forecast():
         api = api_request.json()
         Window2 = Toplevel()
         Window2.title(city.get() + ": Next 5 days forecast")
-        Window2.geometry("1300x600")
+        #Window2.geometry("1300x600")
 
         frame_clmn = 0
         lbl_row = 0
@@ -85,7 +85,7 @@ def next_five_days_forecast():
             while api["list"][i]["dt_txt"][8:10] == actual_day and i < api["cnt"]:
                 lbl = Label(day_frame, text=get_time(api, i, mode='hm') + ": Temperatura°C: " + str(
                     round(api["list"][i]["main"]["feels_like"] - 273))
-                                            + "; " + get_weather_description(api, i), font=("Helvetica", 12))
+                                            + "; " + get_weather_description(api, i), font=("Helvetica", 8))
                 lbl.grid(row=lbl_row)
                 lbl_row += 1
                 i += 1
@@ -114,5 +114,8 @@ actual_btn = Button(root, text="Real-Time forecast", padx=20, pady=10, command=a
 actual_btn.grid(row=1, column=0)
 next_days_btn = Button(text="Next 5 days forecast", padx=10, pady=10, command=next_five_days_forecast)
 next_days_btn.grid(row=1, column=1)
+
+root.bind('<Return>', lambda eff: actual_forecast())
+root.bind('<Shift-Return>', lambda eff: next_five_days_forecast())
 
 root.mainloop()
